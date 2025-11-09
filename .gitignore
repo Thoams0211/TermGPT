@@ -1,0 +1,88 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# macOS system files
+.DS_Store
+
+# VSCode project files
+.vscode/
+*.code-workspace
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+pnpm-lock.yaml
+
+# Python virtualenv and packaging
+pip-wheel-metadata/
+dist/
+build/
+*.egg-info/
+
+# Cache and logs
+*.log
+*.tmp
+*.bak
+.cache/
+__pypackages__/
+*.sqlite3
+
+# Secrets (never push these)
+.env
+.env.*
+*.secret.*
+credentials.json
+
+# OS-generated files
+Thumbs.db
+desktop.ini
+
+# Git temporary files
+*.orig
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Model files or large data files
+*.pt
+*.pth
+*.h5
+*.ckpt
+*.npz
+*.npy
+*.onnx
+*.tar.gz
+*.zip
+*.pkl
+*.sh
+*.json
+*.jsonl
+
+# My custom ignore rules
+.idea/
+output/
+logs/
+runs/
+Multi-CL/train_configs/
+Multi-CL/train_configs/mntp/*
+Dataset/

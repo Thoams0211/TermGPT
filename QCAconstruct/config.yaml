@@ -1,0 +1,16 @@
+# Neo4j Configuration
+neo4j_user: <neo4j_user>
+neo4j_psw: <neo4j_psw>
+neo4j_url: <neo4j_url>
+
+# API Configuration
+API_KEY: <API_KEY>
+
+# Model Configuration
+model_path: <model_path>
+
+# Saving paths (directory)
+fin_train: <fin_train_saving_path>
+fin_test: <fin_test_saving_path>
+jec_train: <jec_train_saving_path>
+jec_test: <jec_test_saving_path>
