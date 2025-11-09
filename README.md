@@ -12,8 +12,6 @@
 
 </div>
 
----
-
 ## 📋 Table of Contents
 
 - [✨ Features](#-features)
@@ -27,7 +25,6 @@
 - [📚 Documentation](#-documentation)
 - [📄 License](#-license)
 
----
 
 ## ✨ Features
 
@@ -36,8 +33,6 @@
 - 🔄 **Terminology Adaptation**: Specialized fine-tuning for legal and financial domain terminology
 - ⚡ **Efficient Training**: Support for DeepSpeed and distributed training
 - 📈 **Dual Validation**: Model validation in both QA and QCA formats
-
----
 
 ## 🏗️ Model Architecture
 
@@ -49,7 +44,7 @@
 
 </div>
 
----
+
 
 ## 🚀 Quick Start
 
@@ -65,7 +60,7 @@ conda env create -f envs/termgpt.yml
 conda env create -f envs/multicl.yml
 ```
 
----
+
 
 ## 📖 Usage Guide
 
@@ -104,7 +99,7 @@ python construct.py \
 
 > 💡 **Tip**: For more details, refer to [GraphConstruct Documentation](GraphConstruct/README.md) and [QCAconstruct Documentation](QCAconstruct/README.md)
 
----
+
 
 ### Step 2: Multi-level Contrastive Learning
 
@@ -145,7 +140,7 @@ deepspeed --include localhost:0,1 \
 
 > 💡 **Tip**: For more details, refer to [Multi-CL Documentation](Multi-CL/README.md)
 
----
+
 
 ### Step 3: Model Validation
 
@@ -191,7 +186,7 @@ python eval.py \
 
 > 💡 **Tip**: For more details, refer to [QA Validation Documentation](validation_qa/README.md) and [QCA Validation Documentation](validation_choice/README.md)
 
----
+
 
 ## 📚 Documentation
 
@@ -204,13 +199,13 @@ python eval.py \
 | **validation_choice** | QCA format validation | [📖 View Docs](validation_choice/README.md) |
 | **SFT** | Supervised fine-tuning | [📖 View Docs](SFT/README.md) |
 
----
+
 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENCE).
 
----
+
 
 <div align="center">
 
