@@ -1,89 +1,162 @@
+<div align="center">
+
 <h1 align="center">TermGPT: Multi-Level Contrastive Fine-Tuning for Terminology Adaptation in Legal and Financial Domains </h1>
 
-This repository contains the code for the TermGPT model, which is a framework for terminology finetuning. 
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENCE)
 
-![model](asset/model.png)
+**A terminology-aware fine-tuning framework based on Sentence Graph-based Data Augmentation and Multi-Level Contrastive Learning**
 
-## Environment
-Before using the code, please create a conda environment with the following command:
+[Model Architecture](#️-model-architecture) • [Quick Start](#-quick-start) • [Usage Guide](#-usage-guide) • [Validation](#-validation)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🏗️ Model Architecture](#️-model-architecture)
+- [🚀 Quick Start](#-quick-start)
+  - [Environment Setup](#environment-setup)
+- [📖 Usage Guide](#-usage-guide)
+  - [Step 1: Sentence Graph-based Data Augmentation](#step-1-sentence-graph-based-data-augmentation)
+  - [Step 2: Multi-level Contrastive Learning](#step-2-multi-level-contrastive-learning)
+  - [Step 3: Model Validation](#step-3-model-validation)
+- [📚 Documentation](#-documentation)
+- [📄 License](#-license)
+
+---
+
+## ✨ Features
+
+- 🎯 **Multi-level Contrastive Learning**: Contrastive learning at both sentence-level and token-level to enhance model understanding of domain-specific terminology
+- 📊 **Graph-based Data Augmentation**: High-quality data augmentation leveraging sentence graph structures
+- 🔄 **Terminology Adaptation**: Specialized fine-tuning for legal and financial domain terminology
+- ⚡ **Efficient Training**: Support for DeepSpeed and distributed training
+- 📈 **Dual Validation**: Model validation in both QA and QCA formats
+
+---
+
+## 🏗️ Model Architecture
+
+<div align="center">
+
+![Model Architecture](asset/model.png)
+
+*TermGPT Model Architecture*
+
+</div>
+
+---
+
+## 🚀 Quick Start
+
+### Environment Setup
+
+First, create and activate the required conda environments:
+
 ```bash
+# Create base environment
 conda env create -f envs/termgpt.yml
+
+# Create multi-level contrastive learning environment
 conda env create -f envs/multicl.yml
 ```
 
-## Sentence Graph based Data Augmentation
-First, you should perform data augmentation, and activate the following conda environment before data augmentation:
+---
+
+## 📖 Usage Guide
+
+### Step 1: Sentence Graph-based Data Augmentation
+
+#### 1.1 Activate Environment
+
 ```bash
 conda activate termgpt
 ```
 
-To construct the sentence graph, you should following the following command:
+#### 1.2 Construct Sentence Graph
+
 ```bash
 cd GraphConstruct
 
 python graph.py \
-    --rulePath  <rule_path> \
+    --rulePath <rule_path> \
     --schemaPath <schema_path> \
     --erPath <er_path> \
-    --embedPath <embed_path> \
+    --embedPath <embed_path>
 ```
 
-To perform data augmentation, you should following the following command:
+#### 1.3 Perform Data Augmentation
+
 ```bash
 cd QCAconstruct
 
 python construct.py \
-    --datasetDir <your_dataset_path>  \
+    --datasetDir <your_dataset_path> \
     --senMessage <your_sentence_message_path> \
     --tokMessage <your_token_message_path> \
     --mixclDir <your_output_mixcl_data_path> \
-    --resultQCA <your_result_path> \
+    --resultQCA <your_result_path>
 ```
 
-You can also follow the specific [instructions of GraphConstruct](GraphConstruct/README.md) to construct the sentence graph, and [instructions of QCAconstruct](QCAconstruct/README.md) to perform data augmentation.
+> 💡 **Tip**: For more details, refer to [GraphConstruct Documentation](GraphConstruct/README.md) and [QCAconstruct Documentation](QCAconstruct/README.md)
 
-## Multi-level Contrastive Learning
-Second, you can perform multi-level contrastive learning and activate the following conda environment before multi-level contrastive learning:
+---
+
+### Step 2: Multi-level Contrastive Learning
+
+#### 2.1 Activate Environment
+
 ```bash
 conda activate multicl
 cd Multi-CL
 ```
 
-To perform sentence-level contrastive learning, you should following the following command:
+#### 2.2 Sentence-level Contrastive Learning
+
 ```bash
-# Start MNTP training before CL
+# Step 1: Start MNTP training (before CL)
 DS_SKIP_CUDA_CHCK=1 deepspeed --include localhost:0,1 experiments/run_mntp.py -c <data_path>
 
-# Data Preprocess
+# Step 2: Data preprocessing
 python scripts/wash.py \
     --rawPath <raw_path> \
-    --outputPath <output_path> \
+    --outputPath <output_path>
 
-# Train the model
+# Step 3: Train the model
 torchrun --nproc_per_node=<num_gpus> experiments/cl-sentence.py <data_path>
 ```
 
-To perform token-level contrastive learning, you should following the following command:
+#### 2.3 Token-level Contrastive Learning
+
 ```bash
-# Data Preprocess
+# Step 1: Data preprocessing
 python scripts/mixup.py \
     -r <raw_data_path> \
-    -m <mix_data_path> \
+    -m <mix_data_path>
 
-# Training the model
+# Step 2: Train the model
 deepspeed --include localhost:0,1 \
     experiments/cl-token.py <mix_data_path>
 ```
 
-You can also follow the specific [instructions of Multi-CL](Multi-CL/README.md) to perform multi-level contrastive learning.
+> 💡 **Tip**: For more details, refer to [Multi-CL Documentation](Multi-CL/README.md)
 
-## Validation
-If you want to validate the model, you should activate the following conda environment:
+---
+
+### Step 3: Model Validation
+
+#### 3.1 Activate Environment
+
 ```bash
 conda activate termgpt
 ```
 
-To validate the model in QA format, you should following the following command:
+#### 3.2 QA Format Validation
+
 ```bash
 cd validation_qa
 
@@ -97,10 +170,11 @@ python eval.py \
     --top_p <top_p> \
     --top_k <top_k> \
     --temperature <temperature> \
-    --api_key <api_key> \
+    --api_key <api_key>
 ```
 
-To validate the model in QCA format, you should following the following command:
+#### 3.3 QCA Format Validation
+
 ```bash
 cd validation_choice
 
@@ -112,7 +186,34 @@ python eval.py \
     --max_length <max_length> \
     --top_p <top_p> \
     --top_k <top_k> \
-    --temperature <temperature> \
+    --temperature <temperature>
 ```
 
-You can also follow the specific [instructions of QA format validation](validation_qa/README.md) or [instructions of QCA format validation](validation_choice/README.md) to validate the model.
+> 💡 **Tip**: For more details, refer to [QA Validation Documentation](validation_qa/README.md) and [QCA Validation Documentation](validation_choice/README.md)
+
+---
+
+## 📚 Documentation
+
+| Module | Description | Documentation |
+|:---:|:---:|:---:|
+| **GraphConstruct** | Sentence graph construction | [📖 View Docs](GraphConstruct/README.md) |
+| **QCAconstruct** | Data augmentation | [📖 View Docs](QCAconstruct/README.md) |
+| **Multi-CL** | Multi-level contrastive learning | [📖 View Docs](Multi-CL/README.md) |
+| **validation_qa** | QA format validation | [📖 View Docs](validation_qa/README.md) |
+| **validation_choice** | QCA format validation | [📖 View Docs](validation_choice/README.md) |
+| **SFT** | Supervised fine-tuning | [📖 View Docs](SFT/README.md) |
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENCE).
+
+---
+
+<div align="center">
+
+**⭐ If this project helps you, please give it a Star!**
+
+</div>
