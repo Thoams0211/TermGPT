@@ -2,9 +2,11 @@
 
 <h1 align="center">TermGPT: Multi-Level Contrastive Fine-Tuning for Terminology Adaptation in Legal and Financial Domains </h1>
 
+[![arXiv](https://img.shields.io/badge/arXiv-2511.09854-b31b1b.svg)](https://arxiv.org/abs/2511.09854)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENCE)
+
 
 **A terminology-aware fine-tuning framework based on Sentence Graph-based Data Augmentation and Multi-Level Contrastive Learning**
 
@@ -34,13 +36,13 @@
 - ⚡ **Efficient Training**: Support for DeepSpeed and distributed training
 - 📈 **Dual Validation**: Model validation in both QA and QCA formats
 
-## 🏗️ Model Architecture
+## 🏗️ Framework Architecture
 
 <div align="center">
 
 ![Model Architecture](asset/model.png)
 
-*TermGPT Model Architecture*
+*TermGPT Framework Architecture*
 
 </div>
 
